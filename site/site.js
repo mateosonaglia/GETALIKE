@@ -4,6 +4,7 @@ menu?.addEventListener('click', () => {
   const expanded = menu.getAttribute('aria-expanded') !== 'true';
   menu.setAttribute('aria-expanded', String(expanded));
   navigation.classList.toggle('open', expanded);
+  if (expanded) navigation.querySelector('a')?.focus();
 });
 navigation?.addEventListener('click', event => {
   if (event.target.closest('a')) { menu.setAttribute('aria-expanded','false'); navigation.classList.remove('open'); }
@@ -13,6 +14,42 @@ document.addEventListener('keydown', event => {
     menu.setAttribute('aria-expanded','false'); navigation.classList.remove('open'); menu.focus();
   }
 });
+// Keep the visible menu state accurate and usable with a keyboard.
+const closeMenu = () => {
+  menu?.setAttribute('aria-expanded','false');
+  navigation?.classList.remove('open');
+};
+document.addEventListener('click', event => {
+  if (!event.target.closest('.header')) closeMenu();
+});
+document.querySelector('.header-talk')?.addEventListener('click', closeMenu);
+window.matchMedia('(min-width: 901px)').addEventListener('change', closeMenu);
+const navLinks = [...document.querySelectorAll('#navigation [data-section]')];
+const markSection = (section, current = 'location') => {
+  navLinks.forEach(link => {
+    const active = link.dataset.section === section;
+    link.classList.toggle('active', active);
+    if (active) link.setAttribute('aria-current', current);
+    else link.removeAttribute('aria-current');
+  });
+};
+if (location.pathname.replace(/\/$/, '') === '/work') markSection('work', 'page');
+else if (location.pathname === '/') {
+  const sections = ['services', 'process', 'about-us'].map(id => document.getElementById(id)).filter(Boolean);
+  const updateSection = () => {
+    const marker = document.querySelector('.header').getBoundingClientRect().bottom + 120;
+    const current = sections.filter(section => section.getBoundingClientRect().top <= marker).at(-1);
+    // Do not keep a section selected once its content has passed.
+    markSection(current && current.getBoundingClientRect().bottom > marker ? current.id : '');
+  };
+  let sectionFramePending = false;
+  window.addEventListener('scroll', () => {
+    if (sectionFramePending) return;
+    sectionFramePending = true;
+    requestAnimationFrame(() => { updateSection(); sectionFramePending = false; });
+  }, {passive:true});
+  updateSection();
+}
 const priorities = {
  time: ['Less on your plate','A marketing partner who takes it from here.','From planning content to keeping your channels active, we handle the day to day. You stay involved in the decisions that matter, with a simple process for feedback and approvals.'],
  inquiries: ['A stronger presence','Help the right people find their way to you.','We look at who your customers are and where they look for a business like yours. Then we agree on the right mix of content, search visibility, and advertising to support that goal.'],
