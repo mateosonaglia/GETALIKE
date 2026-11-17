@@ -5,3 +5,5 @@ node_modules/
 .DS_Store
 prototype-export.html
 scripts/prepare-from-approved-preview.py
+
+.env*

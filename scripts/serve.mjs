@@ -1,4 +1,6 @@
 import {createServer} from 'node:http';
+import {Readable} from 'node:stream';
+import {POST} from '../api/inquiry.js';
 import {readFile, stat} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {resolve, extname, sep} from 'node:path';
@@ -6,6 +8,11 @@ const root = resolve(fileURLToPath(new URL('../site/', import.meta.url)));
 const types = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.png':'image/png','.jpg':'image/jpeg','.xml':'application/xml','.txt':'text/plain; charset=utf-8'};
 const server = createServer(async (req,res) => {
   try {
+    if(new URL(req.url,'http://localhost').pathname.replace(/\/$/,'')==='/api/inquiry') {
+      const request = new Request(`http://${req.headers.host}${req.url}`,{method:req.method,headers:req.headers,...(['GET','HEAD'].includes(req.method)?{}:{body:Readable.toWeb(req),duplex:'half'})});
+      const result = await POST(request);
+      res.writeHead(result.status,Object.fromEntries(result.headers));res.end(Buffer.from(await result.arrayBuffer()));return;
+    }
     let path = resolve(root, '.' + decodeURIComponent(new URL(req.url,'http://localhost').pathname));
     if (!path.startsWith(root.endsWith(sep) ? root : root + sep) && path !== root) throw new Error('Invalid path');
     if ((await stat(path)).isDirectory()) path = resolve(path,'index.html');

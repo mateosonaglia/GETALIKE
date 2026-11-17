@@ -5,7 +5,14 @@
   "description": "GETALIKE marketing and advertising agency website",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "dev": "node scripts/serve.mjs"
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test tests/*.test.mjs"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "resend": "6.38.1"
+  },
+  "type": "module"
 }
