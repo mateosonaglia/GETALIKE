@@ -19,19 +19,19 @@ Use Node.js 20 or newer. Run `npm run dev`, then open the printed local address.
 
 `main` is the approved baseline. Use `design-lab` for experiments, or create a descriptive branch such as `design/homepage-copy`. Open a pull request to review changes before merging them into `main`.
 
-Netlify is the selected host. The production branch is `main`. Pull requests receive Deploy Previews once the repository is connected. Enable branch deploys for `design-lab` in Netlify's Branches and deploy contexts settings to keep a separate experiment URL. The custom domain belongs on the production deployment.
+Vercel is the selected host. The production branch is `main`, and the custom domain belongs on that deployment. Pushes to `design-lab` and other development branches receive separate Vercel preview deployments. Review changes in a pull request before merging them into `main`.
 
-## Netlify
+## Vercel
 
-Import the existing `mateosonaglia/GETALIKE` GitHub repository into the user's Netlify account. Use the Free plan, repository root, production branch `main`, build command `npm run build`, and publish directory `dist`. The repository's `netlify.toml` contains the build settings, Node.js version and response headers. No new framework or form service is required.
+Project: `getalike-agency` in the `mateo-sonaglia` workspace, connected to the existing `mateosonaglia/GETALIKE` GitHub repository. Use the repository root, framework preset Other, build command `npm run build`, and output directory `dist`. The repository's `vercel.json` contains these settings.
 
-The Netlify Free plan permits commercial projects and has a monthly usage limit. Do not enable a paid plan or paid add-on without the owner's decision. Account setup and GitHub authorization must be completed in the user's account.
+Keep `getalike.agency` and `www.getalike.agency` attached to this project. The www address redirects to the apex domain. The domain remains registered at Namecheap with external DNS. Use the exact records Vercel recommends for this project, preserve email and verification records, and confirm both HTTPS addresses after changes propagate.
 
-Add `getalike.agency` and `www.getalike.agency` in Netlify's Domain management settings. Keep the domain registered at Namecheap and use external DNS. Copy the exact records shown for this Netlify project into Namecheap, replacing only conflicting website or parking records. Preserve email and verification records. Confirm both HTTPS addresses and their preferred-domain redirect after propagation.
+Account plans and paid upgrades are managed separately by the account owner. Hosting configuration does not determine eligibility for any provider's plan.
 
-## Previous Vercel preview
+## Alternate Netlify deployment
 
-The existing Vercel project is a temporary review preview during the switch. Vercel is not required by this website or by the Netlify deployment. The retained `vercel.json` only applies if deployed to Vercel. After Netlify and the domain work, retire the previous Vercel project or disconnect its Git integration to avoid duplicate builds. No paid Vercel upgrade is needed for the Netlify setup.
+The previous Netlify deployment is retained as a fallback. The portable `netlify.toml` configuration uses Node.js 24, `npm run build`, and publish directory `dist`. It has no effect on Vercel deployments. Netlify's Free plan currently injects a Powered by Netlify badge into public pages; the owner selected Vercel for the current review website.
 
 ## Content notes
 
@@ -40,3 +40,4 @@ The event signup milestone is attributed to City Impact's review and is an event
 Testimonials use the supplied wording, with the requested punctuation changes. Brackets identify the contextual replacement in Josh Carsman's review.
 
 All rights to the brand, original content, and client materials remain with their respective owners. No open-source license is granted by this repository.
+
