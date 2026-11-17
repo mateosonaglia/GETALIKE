@@ -19,15 +19,19 @@ Use Node.js 20 or newer. Run `npm run dev`, then open the printed local address.
 
 `main` is the approved baseline. Use `design-lab` for experiments, or create a descriptive branch such as `design/homepage-copy`. Open a pull request to review changes before merging them into `main`.
 
-Once this repository is connected to Vercel, pushes to development branches receive Preview Deployments. The production branch is `main`. The custom domain belongs on the production deployment.
+Netlify is the selected host. The production branch is `main`. Pull requests receive Deploy Previews once the repository is connected. Enable branch deploys for `design-lab` in Netlify's Branches and deploy contexts settings to keep a separate experiment URL. The custom domain belongs on the production deployment.
 
-## Vercel
+## Netlify
 
-Import `mateosonaglia/GETALIKE`. Use the repository root, framework preset Other, build command `npm run build`, and output directory `dist`. The repository's `vercel.json` contains these settings.
+Import the existing `mateosonaglia/GETALIKE` GitHub repository into the user's Netlify account. Use the Free plan, repository root, production branch `main`, build command `npm run build`, and publish directory `dist`. The repository's `netlify.toml` contains the build settings, Node.js version and response headers. No new framework or form service is required.
 
-Use a Vercel plan suitable for a commercial agency website. Adding or upgrading a paid plan is an account-owner decision.
+The Netlify Free plan permits commercial projects and has a monthly usage limit. Do not enable a paid plan or paid add-on without the owner's decision. Account setup and GitHub authorization must be completed in the user's account.
 
-Add `getalike.agency` and, if wanted, `www.getalike.agency` in the project's Domains settings. Copy the exact DNS records Vercel provides into Namecheap. Keep any existing email DNS records. Do not guess the deployment-specific DNS targets.
+Add `getalike.agency` and `www.getalike.agency` in Netlify's Domain management settings. Keep the domain registered at Namecheap and use external DNS. Copy the exact records shown for this Netlify project into Namecheap, replacing only conflicting website or parking records. Preserve email and verification records. Confirm both HTTPS addresses and their preferred-domain redirect after propagation.
+
+## Previous Vercel preview
+
+The existing Vercel project is a temporary review preview during the switch. Vercel is not required by this website or by the Netlify deployment. The retained `vercel.json` only applies if deployed to Vercel. After Netlify and the domain work, retire the previous Vercel project or disconnect its Git integration to avoid duplicate builds. No paid Vercel upgrade is needed for the Netlify setup.
 
 ## Content notes
 
