@@ -82,5 +82,5 @@ form?.addEventListener('submit',async event=>{
     form.reset(); requestId=undefined;
   }catch{
     status.textContent='Your inquiry could not be confirmed. Your details are still here. Please try again, or email msonaglia@getalike.agency.';
-  }finally{submit.disabled=false; submit.innerHTML='Send my inquiry <span aria-hidden="true">↗</span>'; status.focus();}
+  }finally{submit.disabled=false; submit.innerHTML='Send my inquiry <span aria-hidden="true"><svg class="icon-arrow" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span>'; status.focus();}
 });
